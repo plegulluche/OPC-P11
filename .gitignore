@@ -2,5 +2,7 @@
 *.png
 *.pdf
 *.zip
+*.txt
 venv/
 Cahier_des_charges/
+notes P8.html

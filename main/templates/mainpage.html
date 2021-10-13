@@ -1,5 +1,14 @@
 {% extends 'main.html' %}
-
+{% load static %}
+{% block background_image %}
+    <style>
+        body {
+            background: url('{% static "images/kawin-harasai-k60JspcBwKE-unsplash.jpg" %}') no-repeat center center fixed;
+            background-size: cover;
+        }
+    </style>
+{% endblock %}
 {% block content %}
+
     page d'acceuil
 {% endblock %}
