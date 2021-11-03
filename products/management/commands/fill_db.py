@@ -2,7 +2,7 @@ from django.core.management.base import BaseCommand
 import requests
 from tqdm import tqdm
 
-from products.models import  Category,Products
+from products.models import  Category,Product
 
 
 class Command(BaseCommand):
@@ -18,12 +18,22 @@ class Command(BaseCommand):
 
 
     def _get_categories_data(self):
+        """
+        Get all categories for the Api OpenFoodFact.
+        
+        return list of dictionnaries containing all datas of each category.
+        """
         
         response = requests.get("https://fr.openfoodfacts.org/categories.json")
         data = response.json()
         return data
     
     def _clean_category_data(self):
+        """Takes categories datas and extract only the name of each category
+
+        Returns:
+            list : a list containing all names of categories
+        """
         
         datas = self._get_categories_data()
         list_of_categories = []
@@ -33,10 +43,13 @@ class Command(BaseCommand):
         return list_of_categories
        
     def _fill_categories_in_db(self):
+        """
+        Fill the DB table category with names of all categories.
+        """
         categories = self._clean_category_data()
         for eachcategory in tqdm(categories):
             obj, created = Category.objects.get_or_create(
-                categoryName = f'{eachcategory}',
+                name = f'{eachcategory}',
             )
 
     def _get_eight_categories(self):
@@ -57,10 +70,15 @@ class Command(BaseCommand):
             values = list(map(elems.get, keys))
             for items in values:
                 eightcategories.append(items)
-        print(eightcategories)
+                
         return eightcategories
 
     def _get_products(self):
+        """Makes an Api call to OpenFoodFact to get all products from 8categories.
+
+        Returns:
+            list: list of products, products are dict
+        """
         categories = self._get_eight_categories()
         list_of_products = []
         for each_category in tqdm(categories):
@@ -73,16 +91,22 @@ class Command(BaseCommand):
                     continue
                 else:
                     for items in data_products["products"]:
-                        list_of_products.append(items)
-        
+                        keys = ["product_name_fr","nutrition_grade_fr","image_url","url","image_nutrition_small_url","categories","categories_old"]
+                        prod_keys = items.keys()
+                        if set(keys) == set(prod_keys):
+                            list_of_products.append(items)
+                            
         return list_of_products
     
     
     def _fill_products_in_db(self):
+        """With the list of products fill the DB.
+        """
         all_products = self._get_products()
         for each_product in tqdm(all_products):
-            obj, created = Products.objects.get_or_create(
-                productName = f'{each_product["product_name_fr"]}',
+            print(each_product)           
+            obj, created = Product.objects.get_or_create(
+                name = f'{each_product["product_name_fr"]}',
                 nutriScore = f'{each_product["nutrition_grade_fr"]}',
                 linkToIMG = f'{each_product["image_url"]}',
                 linkToURLOFF = f'{each_product["url"]}',

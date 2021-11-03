@@ -1,5 +1,6 @@
 import pytest
 
+
 from django.test import Client
 from products.models import Products,Category 
 
@@ -20,7 +21,3 @@ def test_category_table():
     category = Category.objects.create(categoryName = 'Snacks')
     expected_value = 'Snacks'
     assert str(category.categoryName) == expected_value
-
-@pytest.mark.django_db
-def test_product_category_table():
-    pass

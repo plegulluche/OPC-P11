@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'products',
     'favorites',
     'crispy_forms',
+    'django_extensions',
 ]
 
 MIDDLEWARE = [

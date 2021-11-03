@@ -2,7 +2,7 @@ from django.db import models
 
 
 class Category(models.Model):
-    categoryName = models.CharField(max_length=400, unique=True, default='to erase')
+    name = models.CharField(max_length=400, unique=True, default='to erase')
 
     
     class Meta:
@@ -10,11 +10,11 @@ class Category(models.Model):
         verbose_name_plural = 'Categories'
 
     def __str__(self):
-        return self.categoryName
+        return self.name
     
 
-class Products(models.Model):
-    productName = models.CharField(max_length=400, unique=True)
+class Product(models.Model):
+    name = models.CharField(max_length=400)
     nutriScore = models.CharField(max_length=1)
     linkToIMG = models.CharField(max_length=300, unique=True)
     linkToURLOFF = models.CharField(max_length=300, unique=True)
@@ -28,5 +28,5 @@ class Products(models.Model):
         
         
     def __str__(self):
-        return self.productName 
+        return self.name 
     
