@@ -1,16 +1,198 @@
 body {
-    background: transparent;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-    display:flex; 
-    flex-direction:column; 
-    min-height:100vh; 
-    margin:0;  
-    position: relative;
+  margin: 0;
+  font-family: var(--bs-body-font-family);
+  font-size: var(--bs-body-font-size);
+  font-weight: var(--bs-body-font-weight);
+  line-height: var(--bs-body-line-height);
+  color: var(--bs-body-color);
+  text-align: var(--bs-body-text-align);
+  background-color: var(--bs-body-bg);
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
 .content-wrapper {
-  padding-top: 130px;
+  margin-top: 20px;
+  padding-top: 20px;
+  padding-bottom: 50px;
+}
+
+.search {
+  position: relative;
+  box-shadow: 0 0 40px rgba(51, 51, 51, .1);
+}
+
+.search input {
+  height: 60px;
+  text-indent: 25px;
+  border: 2px solid #E8A75D;
+}
+
+.search input:focus {
+  box-shadow: none;
+  border: 2px solid #E8A75D;
+}
+
+.search .fa-search {
+  position: absolute;
+  top: 20px;
+  left: 16px;
+}
+
+.search button {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  height: 50px;
+  width: 110px;
+  background: #E8A75D;
+}
+
+header.masthead {
+  padding-top: 10rem;
+  padding-bottom: calc(10rem - 4.5rem);
+  background: linear-gradient(to bottom, rgba(173, 98, 48, 0.904) 0%, rgba(92, 77, 66, 0.8) 100%), url("/static/images/fond1.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: scroll;
+  background-size: cover;
+}
+header.masthead h1, header.masthead .h1 {
+  font-size: 2.25rem;
+}
+
+@media (min-width: 992px) {
+  header.masthead {
+    height: 100vh;
+    min-height: 30rem;
+    padding-top: 4.5rem;
+    padding-bottom: 0;
+  }
+  header.masthead p {
+    font-size: 1.15rem;
+  }
+  header.masthead h1, header.masthead .h1 {
+    font-size: 3rem;
+  }
+}
+@media (min-width: 1200px) {
+  header.masthead h1, header.masthead .h1 {
+    font-size: 3.5rem;
+  }
+}
+
+html {
+  height: 100%;
+  scroll-padding-top: calc(4.5rem - 1px);
+}
+
+body {
+  width: 100%;
+  height: 100%;
+}
+
+.page-section {
+  padding: 8rem 0;
+}
+
+#about {
+  background: linear-gradient(to bottom, rgba(222, 148, 64, 0.904) 0%, rgba(222, 148, 64, 0.8) 100%);
+}
+
+#registration {
+  background: linear-gradient(to bottom, rgba(222, 148, 64, 0.904) 0%, rgba(222, 148, 64, 0.8) 100%);
+  padding-top: 10rem;
+  padding-bottom: calc(10rem - 4.5rem);
+  background: linear-gradient(to bottom, rgba(173, 98, 48, 0.904) 0%, rgba(92, 77, 66, 0.8) 100%), url("/static/images/fond2.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: scroll;
+  background-size: cover;
+
+}
+
+#registration li {
+  list-style: none;
+}
+
+#account {
+  background: linear-gradient(to bottom, rgba(222, 148, 64, 0.904) 0%, rgba(222, 148, 64, 0.8) 100%);
+  padding-top: 10rem;
+  padding-bottom: calc(10rem - 4.5rem);
+  background: linear-gradient(to bottom, rgba(173, 98, 48, 0.904) 0%, rgba(92, 77, 66, 0.8) 100%), url("/static/images/fond2.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: scroll;
+  background-size: cover;
+
+}
+
+#mailbox {
+  border: solid 1px;
+  border-color: #345A61;
+  
+}
+
+#product-page {
+  background: linear-gradient(to bottom, rgba(222, 148, 64, 0.904) 0%, rgba(222, 148, 64, 0.8) 100%);
+  padding-top: 10rem;
+  padding-bottom: calc(10rem - 4.5rem);
+  background: linear-gradient(to bottom, rgba(173, 98, 48, 0.904) 0%, rgba(92, 77, 66, 0.8) 100%);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: scroll;
+  background-size: cover;
+
+}
+
+#product-container {
+  background: linear-gradient(to bottom, rgba(173, 98, 48, 0.904) 0%, rgba(92, 77, 66, 0.8) 100%), url("/static/images/fond3.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: scroll;
+  background-size: cover;
+}
+
+
+@media (min-width: 100px) {
+  #substitute-container {
+    height: 15vh;
+    min-height: 20rem;
+    padding-top: 4.5rem;
+    padding-bottom: 0;
+  }
+  #substitute-container {
+    font-size: 1.15rem;
+  }
+  #substitute-container {
+    font-size: 3rem;
+  }
+}
+
+#substitute-title-row {
+  background: linear-gradient(to bottom, rgba(52, 90, 97, 0.904) 0%, rgba(232, 167, 93, 0.8) 100%);
+}
+
+#substitute-title-row p {
+  color: #ffffff;
+  font-size: 1.5em;
+}
+
+#substitutes-container {
+  background: linear-gradient(to bottom, rgba(232, 167, 93, 0.8) 0%, rgba(52, 90, 97, 0.904) 100%);
+}
+
+#round-letter {
+  display: block;
+  height: 60px;
+  width: 60px;
+  line-height: 60px;
+
+  -moz-border-radius: 30px; /* or 50% */
+  border-radius: 30px; /* or 50% */
+
+  background-color: #345A61;
+  color: white;
+  text-align: center;
+  font-size: 2em;
 }

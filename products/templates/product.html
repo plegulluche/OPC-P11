@@ -1,0 +1,32 @@
+{% extends 'main.html' %}
+
+{% block style %}
+    <style>
+        product-page {background: url({{ product.linkToIMG }})}
+    </style>
+{% endblock style %}
+{% block content %}      
+    <section class="page-section h-100 bg-dark text-white" id="product-page">
+            <div class="container px-4 px-lg-5 h-100 text-center">
+                <img src="{{ product.linkToIMG }}" alt="">
+                <h2 class="mb-4">{{ product.name }}</h2>
+                
+            </div>           
+    </section>
+    <section class="page-section h-100 bg-dark text-white" id="product-page">
+            <div class="row justify-content-center">
+                <div class="col-3">
+                    <img src="{{ nutri_img.link }}" alt="" class="mx-5 rounded float-start" style='height: 150px;'>
+                </div>
+                <div class="col-3">
+                    <img src="{{ product.linkToNutriForG }}" alt=""class="mx-5 rounded float-end">
+                </div>
+            </div>
+            <div class="container px-4 px-lg-5  text-center position-relative">
+                <p  class="col-2 position-absolute top-0 start-50 translate-middle" id="mailbox"><a href='{{ product.linkToURLOFF }}'>Voir la fiche d'OpenFoodFacts</a></p>
+            </div>       
+    </section>
+    
+
+
+{% endblock content %}

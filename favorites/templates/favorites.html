@@ -1,0 +1,28 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<section class="page-section h-100 bg-dark text-white" id="account">
+            <div class="container px-4 px-lg-5 h-100 text-center">
+                <h2 class="mb-4">Bienvenue dans vos favoris !</h2>
+                <p>{{ user.username }}</p>
+            </div>           
+</section>
+<div class="container-fluid" id="substitutes-container">
+    <div class="row justify-content-between">
+        {% for fav in favorites %}
+                <div class="col-sm-12 col-md-6 col-lg-4">
+                <div class="card-header"><span id="round-letter">{{ fav.product.nutriScore }}</span></div>
+                    <div class="card border-warning">
+                        <img src="{{ fav.product.linkToIMG }}" class="card-img" alt="..." style="max-height: 450px;">
+                        <div class="card-body">
+                            <h5 class="card-title"><a href="{% url 'productpage' fav.product.id %}">{{ fav.product.name }}</a></h5>
+                            <a href="{% url 'makefav' fav.product.id %}" class="btn btn-warning">Supprimer ?</a>                                                          
+                        </div>
+                    </div>
+                </div>
+    </div>
+</div>   
+
+{% endfor %}
+
+{% endblock content %}

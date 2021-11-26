@@ -1,0 +1,43 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<div class="container-fluid mt-5" id="substitute-container" style="background: url('{{ baseproduct.linkToIMG }}'),linear-gradient(to bottom, rgba(10, 10, 10, 0.904) 0%, rgba(92, 77, 66, 0.8) 100%); background-repeat: no-repeat; background-size: contain; background-position: center;">
+    <div class="row">
+        <div class="col text-center">
+        <p style="color: #ffffff;">{{ baseproduct.name }}</p>
+        </div>
+    </div>
+</div>
+<div class="row text-center" id="substitute-title-row">
+    <div class="col mt-5 mb-3">
+        <p><strong>Vous pouvez remplacer cet aliment par:</strong></p>    
+    </div>
+</div>
+<div class="container-fluid" id="substitutes-container">
+    <div class="row justify-content-between">
+    {% if substitutes is not none %}
+        {% for substitute in substitutes %}
+                <div class="col-sm-12 col-md-6 col-lg-4">
+                <div class="card-header"><span id="round-letter">{{ substitute.nutriScore }}</span></div>
+                    <div class="card border-warning">
+                        <img src="{{ substitute.linkToIMG }}" class="card-img" alt="..." style="max-height: 450px;">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ substitute.name }}</h5>
+                            {% if request.user.is_authenticated %}
+                            <a href="{% url 'makefav' substitute.id %}" class="btn btn-warning">Sauvegarder</a>
+                            {% else %}
+                            <a href="{% url 'login' %}" class="btn btn-warning">Sauvegarder</a>
+                            {% endif %}        
+                                                      
+                        </div>
+                    </div>
+                </div>   
+        {% endfor %}
+    {% else %}
+        {% include 'snippets/no_product.html' %}
+    {% endif %}
+    </div>
+</div>
+{% endblock content %}
+

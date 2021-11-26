@@ -2,7 +2,7 @@ from django.core.management.base import BaseCommand
 import requests
 from tqdm import tqdm
 
-from products.models import  Category,Product
+from products.models import  Category,Product,Nutrimage
 
 
 class Command(BaseCommand):
@@ -13,40 +13,35 @@ class Command(BaseCommand):
         
     def handle(self, *args, **kwargs):
         
-        self._fill_categories_in_db()
-        self._fill_products_in_db()
+        self._save_nutriscore_images()
+        # self._fill_categories_in_db()
+        # self._fill_products_in_db()
+        
+
 
 
     def _get_categories_data(self):
         """
         Get all categories for the Api OpenFoodFact.
         
-        return list of dictionnaries containing all datas of each category.
+        return list of strings containing all categories.
         """
-        
-        response = requests.get("https://fr.openfoodfacts.org/categories.json")
-        data = response.json()
-        return data
-    
-    def _clean_category_data(self):
-        """Takes categories datas and extract only the name of each category
+        all_categories = []
+        for iter in tqdm(range(1,4)):
+            response = requests.get(f"https://fr.openfoodfacts.org/categories.json/{iter}")
+            data = response.json()
+            for eachcate in data["tags"]:
+                category = eachcate["name"]
+                all_categories.append(category)
 
-        Returns:
-            list : a list containing all names of categories
-        """
-        
-        datas = self._get_categories_data()
-        list_of_categories = []
-        for allcategories in tqdm(datas["tags"]):
-            category = allcategories["name"]
-            list_of_categories.append(category)
-        return list_of_categories
+        return all_categories
+    
        
     def _fill_categories_in_db(self):
         """
         Fill the DB table category with names of all categories.
         """
-        categories = self._clean_category_data()
+        categories = self._get_categories_data()
         for eachcategory in tqdm(categories):
             obj, created = Category.objects.get_or_create(
                 name = f'{eachcategory}',
@@ -60,16 +55,7 @@ class Command(BaseCommand):
         Return a list.
         """
         all_categories = self._get_categories_data()
-        eightcategories = []
-
-        sortedkeys = sorted(
-            all_categories["tags"], key=lambda x: x["products"], reverse=True
-        )
-        for elems in sortedkeys[:8]:
-            keys = ["name"]
-            values = list(map(elems.get, keys))
-            for items in values:
-                eightcategories.append(items)
+        eightcategories = all_categories[:8]
                 
         return eightcategories
 
@@ -103,8 +89,7 @@ class Command(BaseCommand):
         """With the list of products fill the DB.
         """
         all_products = self._get_products()
-        for each_product in tqdm(all_products):
-            print(each_product)           
+        for each_product in tqdm(all_products):         
             obj, created = Product.objects.get_or_create(
                 name = f'{each_product["product_name_fr"]}',
                 nutriScore = f'{each_product["nutrition_grade_fr"]}',
@@ -112,8 +97,8 @@ class Command(BaseCommand):
                 linkToURLOFF = f'{each_product["url"]}',
                 linkToNutriForG = f'{each_product["image_nutrition_small_url"]}',
             )
-            category = each_product["categories"].split(",")
-            category_old = each_product["categories_old"].split(",")
+            category = each_product["categories"].split(", ")
+            category_old = each_product["categories_old"].split(", ")
             for items in category_old:
                 if items not in category:
                     category.append(items)
@@ -122,3 +107,33 @@ class Command(BaseCommand):
                 obj.category.add(*categories)
             else:
                 created.category.add(*categories)
+    
+    
+    def _save_nutriscore_images(self):
+        nutri_a_url = "/static/images/nutriA.jpg"
+        nutri_b_url = "/static/images/nutriB.jpg"
+        nutri_c_url = "/static/images/nutriC.jpg"
+        nutri_d_url = "/static/images/nutriD.jpg"
+        nutri_e_url = "/static/images/nutriE.jpg"
+        
+        obj,created = Nutrimage.objects.get_or_create(
+            name = 'a',
+            link = nutri_a_url,
+        )
+        obj,created = Nutrimage.objects.get_or_create(
+            name = 'b',
+            link = nutri_b_url,
+        )
+        obj,created = Nutrimage.objects.get_or_create(
+            name = 'c',
+            link = nutri_c_url,
+        )
+        obj,created = Nutrimage.objects.get_or_create(
+            name = 'd',
+            link = nutri_d_url,
+        )
+        obj,created = Nutrimage.objects.get_or_create(
+            name = 'e',
+            link = nutri_e_url,
+        )
+        

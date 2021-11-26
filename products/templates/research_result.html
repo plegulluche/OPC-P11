@@ -1,0 +1,12 @@
+{% extends 'main.html' %}
+
+{% block content %}
+    {% if products %}
+        {% for product in products %}
+            {% include 'snippets/product_found.html' %}
+        {% endfor %}  
+    {% else %}
+        {% include 'snippets/no_product.html' %}
+    {% endif %}
+
+{% endblock content %}

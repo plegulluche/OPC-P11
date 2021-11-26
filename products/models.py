@@ -16,9 +16,9 @@ class Category(models.Model):
 class Product(models.Model):
     name = models.CharField(max_length=400)
     nutriScore = models.CharField(max_length=1)
-    linkToIMG = models.CharField(max_length=300, unique=True)
-    linkToURLOFF = models.CharField(max_length=300, unique=True)
-    linkToNutriForG = models.CharField(max_length=300, unique=True)
+    linkToIMG = models.CharField(max_length=300)
+    linkToURLOFF = models.CharField(max_length=300)
+    linkToNutriForG = models.CharField(max_length=300)
     category = models.ManyToManyField(Category)
     
     
@@ -29,4 +29,16 @@ class Product(models.Model):
         
     def __str__(self):
         return self.name 
+
+
+class Nutrimage(models.Model):
+    name = models.CharField(max_length=1)
+    link = models.CharField(max_length=400)
     
+    class Meta:
+        verbose_name = 'Nutriscore Image'
+        verbose_name_plural = 'Nutriscores Images'
+        
+    def __str__(self):
+        return self.name
+        

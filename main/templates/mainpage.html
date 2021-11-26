@@ -5,10 +5,13 @@
         body {
             background: url('{% static "images/kawin-harasai-k60JspcBwKE-unsplash.jpg" %}') no-repeat center center fixed;
             background-size: cover;
+            
         }
     </style>
 {% endblock %}
 {% block content %}
-
-    page d'acceuil
+    {% include 'snippets/search.html' %}
+    {% include 'snippets/presentation.html' %}
+    {% include 'snippets/contacts.html' %}
+    
 {% endblock %}

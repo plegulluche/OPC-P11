@@ -16,7 +16,7 @@ def registration_view(request):
             account = authenticate(email=email, password=raw_password)
             login(request, account)
             return redirect('mainpage')
-        else:           
+        else:          
             context['registration_form'] = form
     else:
         form = RegistrationForm()
@@ -52,7 +52,9 @@ def login_view(request):
     context['login_form'] = form
     return render(request, 'login.html', context)        
 
-
+def account_view(request):
+    
+    return render(request,'account_page.html', {})
 
 
 
