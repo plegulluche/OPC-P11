@@ -21,7 +21,7 @@
                 <div class="col-sm-12 col-md-6 col-lg-4">
                 <div class="card-header"><span id="round-letter">{{ substitute.nutriScore }}</span></div>
                     <div class="card border-warning">
-                        <img src="{{ substitute.linkToIMG }}" class="card-img" alt="..." style="max-height: 450px;">
+                        <a href="{% url 'productpage' substitute.pk %}" style='color: black; text-decoration: none;'><img src="{{ substitute.linkToIMG }}" class="card-img" alt="..." style="max-height: 450px;"></a>
                         <div class="card-body">
                             <h5 class="card-title">{{ substitute.name }}</h5>
                             {% if request.user.is_authenticated %}

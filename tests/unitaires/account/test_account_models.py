@@ -13,3 +13,6 @@ def test_Account_user_model():
     expected_value = "blob@blobmail.com"
     assert str(new_user.email) == expected_value
     assert new_user.is_admin == False 
+    
+    assert new_user.__str__() == new_user.email
+

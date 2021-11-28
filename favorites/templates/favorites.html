@@ -15,7 +15,7 @@
                     <div class="card border-warning">
                         <img src="{{ fav.product.linkToIMG }}" class="card-img" alt="..." style="max-height: 450px;">
                         <div class="card-body">
-                            <h5 class="card-title"><a href="{% url 'productpage' fav.product.id %}">{{ fav.product.name }}</a></h5>
+                            <h5 class="card-title"><a href="{% url 'productpage' fav.product.id %}" style='color: black; text-decoration: none;'>{{ fav.product.name }}</a></h5>
                             <a href="{% url 'makefav' fav.product.id %}" class="btn btn-warning">Supprimer ?</a>                                                          
                         </div>
                     </div>
