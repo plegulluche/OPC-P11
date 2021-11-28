@@ -99,6 +99,10 @@ body {
   background: linear-gradient(to bottom, rgba(222, 148, 64, 0.904) 0%, rgba(222, 148, 64, 0.8) 100%);
 }
 
+#us {
+  background: linear-gradient(to bottom, rgba(222, 148, 64, 0.904) 0%, rgba(222, 148, 64, 0.8) 100%);
+}
+
 #registration {
   background: linear-gradient(to bottom, rgba(222, 148, 64, 0.904) 0%, rgba(222, 148, 64, 0.8) 100%);
   padding-top: 10rem;

@@ -5,6 +5,7 @@ from favorites.models import FavouriteProduct
 from account.models import Account
 from products.models import Product
 
+@login_required(login_url='/login/')
 def favorites_page(request):
     current_user = Account.objects.get(pk=request.user.id)
     favorites = FavouriteProduct.objects.filter(user=current_user)
@@ -12,7 +13,7 @@ def favorites_page(request):
     context = {'userid': current_user, 'favorites':favorites}
     return render(request,'favorites.html', context)
 
-@login_required
+@login_required(login_url='/login/')
 def save_favorite(request,productid):
     current_user = Account.objects.get(pk=request.user.id)
     product = Product.objects.get(pk=productid)

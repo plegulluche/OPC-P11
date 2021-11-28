@@ -9,6 +9,7 @@ from products.models import Product,Category,Nutrimage
 def product_view(request,productid):
     product = Product.objects.get(pk=productid)
     nutriscore = product.nutriScore
+
     nutriscore_image = Nutrimage.objects.get(name=nutriscore)
     
     context = {"product": product, "nutri_img":nutriscore_image}
@@ -37,7 +38,7 @@ def substitution_results(request,productid):
             substitutes_list.append(sub)
         elif sub.nutriScore < base_nutri:
             substitutes_list.append(sub)
-    if len(substitutes_list) > 10:
+    if len(substitutes_list) > 0:
         ten_substitutes = substitutes_list[:11]
     else:
         ten_substitutes = None

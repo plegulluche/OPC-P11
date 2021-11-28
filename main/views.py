@@ -8,3 +8,7 @@ def mainpage(request):
         
     return render(request, 'mainpage.html',context)
     
+    
+def legalpage(request):
+    
+    return render(request, 'legals.html', {})

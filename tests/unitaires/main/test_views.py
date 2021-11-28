@@ -18,3 +18,11 @@ def test_main_renders_html():
     
     assert resolve(url).view_name == 'mainpage'
     
+def test_legal_page_view():
+    client = Client()
+    path = reverse('legalpage')
+    response = client.get(path)
+    
+    assert response.status_code == 200
+    assert resolve(path).view_name == 'legalpage'
+    

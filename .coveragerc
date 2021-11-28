@@ -8,3 +8,5 @@ omit =  test*
         *apps.py
         *tests.py
         *admin.py
+        templatestags*
+        *manage.py

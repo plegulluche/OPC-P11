@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'favorites',
     'crispy_forms',
     'django_extensions',
+    'templatestags',
 ]
 
 MIDDLEWARE = [

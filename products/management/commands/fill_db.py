@@ -14,8 +14,8 @@ class Command(BaseCommand):
     def handle(self, *args, **kwargs):
         
         self._save_nutriscore_images()
-        # self._fill_categories_in_db()
-        # self._fill_products_in_db()
+        self._fill_categories_in_db()
+        self._fill_products_in_db()
         
 
 
