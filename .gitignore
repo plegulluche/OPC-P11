@@ -1,10 +1,6 @@
-
-
+__pycache__
 *.pdf
 *.zip
-donnees_api.txt
 venv/
-Cahier_des_charges/
-notes P8.html
 *staticfiles
 mediafiles
