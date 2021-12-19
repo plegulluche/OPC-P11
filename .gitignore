@@ -1,12 +1,9 @@
-<<<<<<< HEAD
-
-=======
 purbeurre/settings/production.py
 */__pycache__
->>>>>>> dev
 __pycache__
 *.pdf
 *.zip
 venv/
 *staticfiles
 mediafiles
+.vscode
