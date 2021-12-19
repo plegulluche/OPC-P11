@@ -2,7 +2,7 @@ from django.db import models
 
 
 class Category(models.Model):
-    name = models.CharField(max_length=500, unique=True, default='to erase')
+    name = models.CharField(max_length=600, unique=True, default='to erase')
 
     
     class Meta:
@@ -14,11 +14,11 @@ class Category(models.Model):
     
 
 class Product(models.Model):
-    name = models.CharField(max_length=500)
+    name = models.CharField(max_length=600)
     nutriScore = models.CharField(max_length=1)
-    linkToIMG = models.CharField(max_length=300)
-    linkToURLOFF = models.CharField(max_length=300)
-    linkToNutriForG = models.CharField(max_length=300)
+    linkToIMG = models.CharField(max_length=600)
+    linkToURLOFF = models.CharField(max_length=600)
+    linkToNutriForG = models.CharField(max_length=600)
     category = models.ManyToManyField(Category)
     
     
@@ -33,7 +33,7 @@ class Product(models.Model):
 
 class Nutrimage(models.Model):
     name = models.CharField(max_length=1)
-    link = models.CharField(max_length=500)
+    link = models.CharField(max_length=600)
     
     class Meta:
         verbose_name = 'Nutriscore Image'
