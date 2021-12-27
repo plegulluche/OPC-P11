@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-^sf-hk5ufg%p)&nvki7ijnswrrukob&pta^67kla^s4vfc%(36'
+SECRET_KEY = '-^sf-hk5ufg%p)&nvki7ijnswrrukob&pta^67kla^s4vfc%(36'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
@@ -90,9 +90,9 @@ WSGI_APPLICATION = 'purbeurre.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'purbeurre',
-        'USER': 'purbeurre',
-        'PASSWORD': '1234',
+        'NAME': 'OPC-P11',
+        'USER': 'ouranos',
+        'PASSWORD': 'Xqjrpffh8',
         'HOST': 'localhost',
         'PORT': '5432',
         
@@ -152,3 +152,13 @@ CRISPY_TEMPLATE_PACK = 'bootstrap5'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+#Mail configuration
+#google_password = "fgwczluoldkoqowb"
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'zwightfakezor@gmail.com'
+EMAIL_HOST_PASSWORD = 'fgwczluoldkoqowb'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = 'PurBeurre Team <noreply@purbeurre.com>'
