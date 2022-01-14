@@ -154,13 +154,7 @@ CRISPY_TEMPLATE_PACK = 'bootstrap5'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-#Mail configuration
-#google_password = "fgwczluoldkoqowb"
+#SendGrid configs
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'zwightfakezor@gmail.com'
-EMAIL_HOST_PASSWORD = 'fgwczluoldkoqowb'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL = 'PurBeurre Team <noreply@purbeurre.com>'
+EMAIL_BACKEND = "sendgrid_backend.SendgridBackend"
+SENDGRID_API_KEY = os.environ.get("SENDGRID_API_KEY")

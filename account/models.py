@@ -42,6 +42,9 @@ class Account(AbstractBaseUser):
     is_staff = models.BooleanField(verbose_name='is staff', default=False)
     is_superuser = models.BooleanField(verbose_name='is super', default=False)
     
+    token = models.TextField(null=True,blank=True)
+    email_is_active = models.BooleanField(default=False)
+    
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username', ]
     

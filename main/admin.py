@@ -1,4 +1,6 @@
+from re import A
 from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin
 from products.models import Nutrimage,Product,Category
 from account.models import Account
 from favorites.models import FavouriteProduct
@@ -9,3 +11,13 @@ admin.site.register(Product)
 admin.site.register(Category)
 admin.site.register(Account)
 admin.site.register(FavouriteProduct)
+
+
+class UserAdmin(admin.ModelAdmin):
+    list_display = (
+        "username",
+        "email",
+        "token",
+        "email_is_active",
+    )
+    
