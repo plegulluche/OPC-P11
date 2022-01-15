@@ -7,3 +7,4 @@ venv/
 *staticfiles
 mediafiles
 .vscode
+.env

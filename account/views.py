@@ -50,7 +50,8 @@ def registration_view(request):
             },
         )
         send_mail(email,subject,content)
-    return redirect('activate_your_mail')
+        return redirect('activate_your_mail')
+    return render(request,'register.html')
     
 def logout_view(request):
     logout(request)
@@ -59,31 +60,29 @@ def logout_view(request):
 
 def login_view(request):
     
-    context = {}
+    message = ""
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        user = Account.objects.filter(email=email, is_active=True).first()
+        if user:
+            utilisateur_auth = authenticate(email=user.email, password=password)
+            if utilisateur_auth:
+                if user.email_is_active:
+                    login(request, utilisateur_auth)
+                    return redirect('mainpage')
+                else:
+                    message = "merci d'activer votre compte"
+            else:
+                message = "vos identifiants ne sont pas corrects"
+        else:
+            message = "aucun utilisateur ne correspond a vos informations saisies"
     
-    user = request.user
-    if user.is_authenticated:
-        return redirect('mainpage')
-    if request.POST:
-        form = AccountAuthenticationForm(request.POST)
-        if form.is_valid():
-            email = request.POST['email']
-            password = request.POST['password']
-            user = authenticate(email=email, password=password)
-            
-            if user:
-                login(request, user)
-                return redirect('mainpage')
-    else:
-        form = AccountAuthenticationForm()
-    
-    context['login_form'] = form
-    return render(request, 'login.html', context)        
+    return render(request, 'login.html', {"message":message})      
 
 def account_view(request):
     
     return render(request,'account_page.html', {})
-
 
 
 
