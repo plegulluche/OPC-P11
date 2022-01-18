@@ -15,4 +15,12 @@
 <div class="container px-4 px-lg-5 h-100 text-center position-relative">
     <p  class="p-3 mt-5 col-2 position-absolute top-0 start-50 translate-middle" id="mailbox">{{ user.email }}</p>
 </div>
+<br>
+<br>
+<br>
+
+<div class="container px-4 px-lg-5 h-100 text-center position-relative">
+    <p class="p-3 mt-5 col-2 position-absolute top-0 start-50 translate-middle" id="mailbox"><a href="{% url 'password_change' %}">Changer de mot de passe</a></p>
+    
+</div>
 {% endblock content %}

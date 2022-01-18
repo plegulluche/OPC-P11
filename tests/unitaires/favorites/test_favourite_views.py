@@ -5,8 +5,8 @@ from pytest_django.asserts import assertTemplateUsed
 
 from account.models import Account
 from products.models import Product
-from favorites.models import FavouriteProduct
-from favorites.views import favorites_page,save_favorite
+
+
 
 CLIENT = Client()
 

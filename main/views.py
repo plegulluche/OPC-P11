@@ -1,6 +1,4 @@
 from django.shortcuts import render
-from django.db.models import Q
-from products.models import Product,Category
 
 
 def mainpage(request):
@@ -12,3 +10,6 @@ def mainpage(request):
 def legalpage(request):
     
     return render(request, 'legals.html', {})
+
+def handle_not_found(request,exception):
+    return render(request, 'not-found.html')

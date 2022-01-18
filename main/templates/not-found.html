@@ -1,0 +1,21 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block content %}
+<br>
+<br>
+<br>
+
+<header class="masthead">
+	<div class="container-fluid px-4 px-lg-5 h-100" id="registration">
+		<div class="row gx-4 gx-lg-5 h-100 align-items-top justify-content-center text-center">
+            <h2>YOU ARE LOST</h2>
+
+            <p>The link you requested does not exists or have been deleted</p>
+
+            <p><a href="{% url 'mainpage' %}">Go back home</a></p> 
+
+		</div>
+	</div>
+</header>
+{% endblock content %}
