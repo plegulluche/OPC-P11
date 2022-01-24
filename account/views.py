@@ -1,17 +1,15 @@
 from django.shortcuts import render, redirect
-from django.contrib import messages
 from django.contrib.auth import login, authenticate, logout
 from django.template.loader import render_to_string
-from account.forms import  AccountAuthenticationForm
 from uuid import uuid4
 from account.models import Account
 from purbeurre.manager import send_mail
 
 def activate_message_view(request):
-    return render(request, 'activate_email.html')
+    return render(request, 'activate_account/activate_email.html')
 
 def active_succes_view(request):
-    return render(request, 'active_success.html')
+    return render(request, 'activate_account/active_success.html')
 
 def activate_email_view(request,token):
     user = Account.objects.filter(token=token).first()
@@ -24,24 +22,39 @@ def activate_email_view(request,token):
 
 
 def registration_view(request):
+    message = ""
     if request.method == 'POST':
+        
         name = request.POST.get('username')
         email = request.POST.get('email')
         password = request.POST.get('password')
         rand_token = uuid4()
         
-        new_user = Account()
-        new_user.username = name
-        new_user.email = email
-        new_user.password = password
-        new_user.token = rand_token
-        new_user.save()
-        new_user.set_password(password)
-        new_user.save()
+        if name != "":
+            if email != "":
+                if password != "":
+                    new_user = Account()
+                    new_user.username = name
+                    new_user.email = email
+                    new_user.password = password
+                    new_user.token = rand_token
+                    new_user.save()
+                    new_user.set_password(password)
+                    new_user.save()
+                else:
+                    message = "Veuillez saisir tout les champs"
+                    return render(request, 'register.html', {"message":message})
+            else:
+                message = "Veuillez saisir tout les champs"
+                return render(request, 'register.html', {"message":message})
+        else:
+                message = "Veuillez saisir tout les champs"
+                return render(request, 'register.html', {"message":message})
+            
         
         subject = 'activez votre compte'
         content = render_to_string(
-            "active.html",
+            "activate_account/active.html",
             {
                 "username": name,
                 "link": f'http://127.0.0.1:8000/activate-email/{rand_token}'

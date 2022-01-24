@@ -1,5 +1,5 @@
 from django.test import Client
-from django.urls import reverse, resolve
+from django.urls import reverse
 from products.models import Product,Nutrimage,Category
 from django.db.models import Q
 import pytest

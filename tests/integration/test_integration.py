@@ -1,5 +1,4 @@
 import pytest
-from account.forms import AccountAuthenticationForm, RegistrationForm
 from account.models import Account
 from account.views import (account_view, login_view, logout_view,
                            registration_view)
@@ -11,30 +10,6 @@ from pytest_django.asserts import assertTemplateUsed
 
 CLIENT = Client()
 
-@pytest.mark.django_db
-def test_login_route():
-
-    client = Client()
-
- #Inscrire un utilisateur à l’aide de la vue `signup`afin de l’enregistrer dans la base de données
-    credentials = {
-            "email": "donald@gmail.com",
-            "password1": "Xqjrpffh8", 
-            "password2" : "Xqjrpffh8",
-            "username": "Donaldduck"}
-    
-    temp_user = client.post(reverse('add_user'), credentials)
-
-    #Connecter cet utilisateur avec la vue `login`
-    response = client.post(reverse('login'), {'email': 'donald@gmail.com', 'password': 'Xqjrpffh8'})
-
-    #Vérifier que la redirection vers la page d’accueil est effectuée
-    assert response.status_code == 302
-    assert response.url == reverse('mainpage')
-
-    #Vérifier que l’utilisateur est bien authentifié 
-    user = auth.get_user(client)
-    assert user.is_authenticated
     
 @pytest.mark.django_db
 def test_signup_route():
@@ -57,13 +32,12 @@ def test_signup_route():
 
     credentials = {
             "email": "donald@gmail.com",
-            "password1": "Xqjrpffh8", 
-            "password2" : "Xqjrpffh8",
+            "password" : "Xqjrpffh8",
             "username": "Donaldduck"}
     # creating a temporary user and testing if the user gets redirected to 'login' route if signup was successful
     response = CLIENT.post(reverse('add_user'), credentials)
     assert response.status_code == 302
-    assert response.url == reverse('mainpage')
+    assert response.url == reverse('activate_your_mail')
     
     
 @pytest.mark.django_db
@@ -75,12 +49,12 @@ def test_signup_route_failed():
         """
 
         credentials = {
-            "email": "donald@gmail.com",
-            "password1": "Xqjrpffh8", 
-            "password2" : "",
-            "username": "Donaldduck"}
-        response = CLIENT.post(reverse('add_user'), credentials)
-        assertTemplateUsed(response, 'register.html')
+            "email": "",
+            "password" : "",
+            "username": ""}
+        response = CLIENT.post('/register/', credentials)
+        assert response.status_code == 200
+        assertTemplateUsed('register.html')
 
 
 @pytest.mark.django_db
@@ -97,8 +71,7 @@ def test_profile_route():
 
     credentials = {
             "email": "donald@gmail.com",
-            "password1": "Xqjrpffh8", 
-            "password2" : "Xqjrpffh8",
+            "password" : "Xqjrpffh8",
             "username": "Donaldduck"}
     temp_user = CLIENT.post(reverse('add_user'), credentials)
     CLIENT.post(reverse('login'), {'username': 'Donaldduck', 'password': 'Xqjrpffh8'})

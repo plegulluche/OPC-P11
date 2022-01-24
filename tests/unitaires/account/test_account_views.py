@@ -1,67 +1,171 @@
-from http import HTTPStatus
-from django.contrib.auth import authenticate
-from django.test import TestCase
 from django.urls import reverse
 from django.test import Client
 from account.models import Account
+import pytest
+from pytest_django.asserts import assertTemplateUsed
 
-class TestView(TestCase):
-    
-    fixtures = ['account.json']
-    def test_registration_view(self):
-        #test get method
-        response = self.client.get("/register/")
-        self.assertEqual(response.status_code, 200)
-        
-        #test invalid post data
-        response = self.client.post("/register/", data={})
-        self.assertEqual(response.status_code, 200)
-        
-        #test valid post data
-        response = self.client.post("/register/", data={
-            "email": "donald@gmail.com",
-            "password1": "Xqjrpffh8", 
-            "password2" : "Xqjrpffh8",
-            "username": "Donaldduck"}
-        )
-        
-        self.assertEqual(response.status_code, 302)
-        
-        user = Account.objects.get(email="donald@gmail.com")
-        self.assertEqual(user.email,"donald@gmail.com")
 
+@pytest.mark.django_db   
+def test_registration_view():
+    client = Client()
+    payload = {
+            "email": "foo@gmail.com",
+            "password": "oAy&mX57qeo&C3cE", 
+            "username": "Donaldduck",
+            }
+    response = client.post('/register/', payload)
     
-    def test_logout_view(self):
-        #test get method
-        response = self.client.get("/logout/")
-        self.assertEqual(response.status_code, 302)
-        #test logout
-        user = authenticate(email='testuser@gmail.com',password='oAy&mX57qeo&C3cE')
-        self.assertTrue(user.is_authenticated)
-        self.client.login(email='testuser@gmail.com',password='oAy&mX57qeo&C3cE')
-        self.assertIn('_auth_user_id', self.client.session)
-        
-        self.client.logout()
-        self.assertNotIn('_auth_user_id', self.client.session)
+    user = Account.objects.filter(email="foo@gmail.com").first()
     
-    def test_valid_login_view(self):
-        #test get method
-        response = self.client.get("/login/")
-        self.assertEqual(response.status_code, 200)
-        
-        #test redirection
-        self.client.login(email='testuser@gmail.com',password='oAy&mX57qeo&C3cE')
-        self.assertIn('_auth_user_id', self.client.session)
-        
-    def test_invalid_login_view(self):    
-        #test invalid form data
-        self.client.logout()
-        self.client.login(email='wrongamail@not.com',password='fejlskfj')
-        self.assertNotIn('_auth_user_id', self.client.session)
+    assert user.email == 'foo@gmail.com'
+    assert response.status_code == 302
 
-    def test_account_view(self):
-        #test get method
-        response = self.client.get("/account/")
-        self.assertEqual(response.status_code, 200)
-        
-        
+@pytest.mark.django_db
+def test_login_with_valid_user():
+    client = Client()
+    email = "foo@gmail.com"
+    password = "oAy&mX57qeo&C3cE" 
+    username = "Donaldduck"
+    email_is_active = True
+            
+    new_user = Account()
+    new_user.username = username
+    new_user.password = password
+    new_user.email_is_active = email_is_active
+    new_user.email = email
+    new_user.save()
+    new_user.set_password(password)
+    new_user.save()
+    payload = {"email":"foo@gmail.com", "password" :'oAy&mX57qeo&C3cE'}
+    response = client.post('/login/', payload)
+    assert response.status_code == 302
+    assertTemplateUsed('mainpage.html')
+    
+@pytest.mark.django_db
+def test_login_unregistered_user():
+    client = Client()
+    email = "foo@gmail.com"
+    password = "oAy&mX57qeo&C3cE" 
+    username = "Donaldduck"
+    email_is_active = False
+            
+    new_user = Account()
+    new_user.username = username
+    new_user.password = password
+    new_user.email_is_active = email_is_active
+    new_user.email = email
+    new_user.save()
+    new_user.set_password(password)
+    new_user.save()
+    payload = {"email":"foo@gmail.com", "password" :'oAy&mX57qeo&C3cE'}
+    response = client.post('/login/', payload)
+    message = response.context['message']
+    assertTemplateUsed(response, 'login.html')
+    assert message == "merci d'activer votre compte"
+    assert response.status_code == 200
+    
+@pytest.mark.django_db
+def test_login_wrong_credentials():
+    client = Client()
+    email = "foo@gmail.com"
+    password = "oAy&mX57qeo&C3cE" 
+    username = "Donaldduck"
+    email_is_active = False
+            
+    new_user = Account()
+    new_user.username = username
+    new_user.password = password
+    new_user.email_is_active = email_is_active
+    new_user.email = email
+    new_user.save()
+    new_user.set_password(password)
+    new_user.save()
+    payload = {"email":"foo@gmail.com", "password" :'oA&C3cE'}
+    response = client.post('/login/', payload)
+    message = response.context['message']
+    assertTemplateUsed(response, 'login.html')
+    assert message == "vos identifiants ne sont pas corrects"
+    assert response.status_code == 200
+    
+@pytest.mark.django_db
+def test_login_invalid_user():
+    client = Client()
+   
+    payload = {"email":"fake@gmail.com", "password" :'57qeo&C3cE'}
+    response = client.post('/login/', payload)
+    message = response.context['message']
+    assertTemplateUsed(response, 'login.html')
+    assert message == "aucun utilisateur ne correspond a vos informations saisies"
+    assert response.status_code == 200
+    
+
+def test_logout_view():
+    client = Client()
+    response = client.get(reverse('logout'))
+    assert response.status_code == 302
+    assertTemplateUsed('logout.html')
+    
+def test_activate_message_view():
+    client = Client()
+    response = client.get(reverse('activate_your_mail'))
+    assert response.status_code == 200
+    assertTemplateUsed('activate_email.html')
+    
+def test_active_succes_view():
+    client = Client()
+    response = client.get(reverse('success'))
+    assert response.status_code == 200
+    assertTemplateUsed('active_success.html')
+
+@pytest.mark.django_db
+def test_activate_mail_worked_view():
+    client = Client()
+    email = "foo@gmail.com"
+    password = "oAy&mX57qeo&C3cE" 
+    username = "Donaldduck"
+    token = 1
+    email_is_active = False
+            
+    new_user = Account()
+    new_user.username = username
+    new_user.token = token
+    new_user.password = password
+    new_user.email_is_active = email_is_active
+    new_user.email = email
+    new_user.save()
+    new_user.set_password(password)
+    new_user.save()
+    response = client.get(reverse('activate',kwargs= {'token':1}))
+    
+    assert response.status_code == 302
+    assertTemplateUsed('success.html')
+    
+@pytest.mark.django_db
+def test_activate_mail_failed_view():
+    client = Client()
+    email = "foo@gmail.com"
+    password = "oAy&mX57qeo&C3cE" 
+    username = "Donaldduck"
+    token = 1
+    email_is_active = False
+            
+    new_user = Account()
+    new_user.username = username
+    new_user.token = token
+    new_user.password = password
+    new_user.email_is_active = email_is_active
+    new_user.email = email
+    new_user.save()
+    new_user.set_password(password)
+    new_user.save()
+    response = client.get(reverse('activate',kwargs= {'token':12}))
+    
+    assert response.status_code == 302
+    assertTemplateUsed('login.html')
+    
+def test_account_view():
+    client = Client()
+    response = client.get(reverse('account_page'))
+    
+    assert response.status_code == 200
+    assertTemplateUsed('account_page.html')

@@ -1,5 +1,3 @@
-import pytest
-
 from django.urls import reverse, resolve
 
 
@@ -57,3 +55,13 @@ def test_reset_password_complete():
     path = reverse('password_reset_complete')
     assert path == '/reset_password_complete/'
     assert resolve(path).view_name == 'password_reset_complete'
+    
+def test_password_change():
+    path = reverse('password_change')
+    assert path == '/password_change/'
+    assert resolve(path).view_name == 'password_change'
+    
+def test_password_change_done():
+    path = reverse('password_change_done')
+    assert path == '/password_change/done/'
+    assert resolve(path).view_name == 'password_change_done'

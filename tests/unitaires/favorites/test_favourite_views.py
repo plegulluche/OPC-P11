@@ -13,13 +13,20 @@ CLIENT = Client()
 @pytest.mark.django_db
 def test_favorites_page():
     
-    credentials = {
-            "email": "donald@gmail.com",
-            "password1": "Xqjrpffh8", 
-            "password2" : "Xqjrpffh8",
-            "username": "Donaldduck"}
+    email = "donald@gmail.com"
+    password = "Xqjrpffh8" 
+    username = "Donaldduck"
+    email_is_active = True
+            
+    new_user = Account()
+    new_user.username = username
+    new_user.password = password
+    new_user.email_is_active = email_is_active
+    new_user.email = email
+    new_user.save()
+    new_user.set_password(password)
+    new_user.save()
     
-    temp_user = CLIENT.post('/register/',credentials)
     CLIENT.post('/login/', {'email': 'donald@gmail.com', 'password': 'Xqjrpffh8'})
     
     response = CLIENT.get(reverse('favoritepage'))
