@@ -26,7 +26,7 @@ SECRET_KEY = "-^sf-hk5ufg%p)&nvki7ijnswrrukob&pta^67kla^s4vfc%(36"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
 
@@ -149,8 +149,8 @@ CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-if DEBUG:
-    EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"  # for dev only
+# if DEBUG:
+#     EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"  # for dev only
 
 # SendGrid configs
 
