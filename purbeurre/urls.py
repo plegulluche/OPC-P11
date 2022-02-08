@@ -20,16 +20,15 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', include('main.urls')),
-    path('', include('account.urls')),
-    path('', include('products.urls')),
-    path('', include('favorites.urls')),
-    
+    path("admin/", admin.site.urls),
+    path("", include("main.urls")),
+    path("", include("account.urls")),
+    path("", include("products.urls")),
+    path("", include("favorites.urls")),
 ]
 
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-    
+
 handler404 = "main.views.handle_not_found"

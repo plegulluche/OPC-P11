@@ -6,38 +6,38 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('products', '0001_initial'),
+        ("products", "0001_initial"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='category',
-            name='name',
-            field=models.CharField(default='to erase', max_length=600, unique=True),
+            model_name="category",
+            name="name",
+            field=models.CharField(default="to erase", max_length=600, unique=True),
         ),
         migrations.AlterField(
-            model_name='nutrimage',
-            name='link',
+            model_name="nutrimage",
+            name="link",
             field=models.CharField(max_length=600),
         ),
         migrations.AlterField(
-            model_name='product',
-            name='linkToIMG',
+            model_name="product",
+            name="linkToIMG",
             field=models.CharField(max_length=600),
         ),
         migrations.AlterField(
-            model_name='product',
-            name='linkToNutriForG',
+            model_name="product",
+            name="linkToNutriForG",
             field=models.CharField(max_length=600),
         ),
         migrations.AlterField(
-            model_name='product',
-            name='linkToURLOFF',
+            model_name="product",
+            name="linkToURLOFF",
             field=models.CharField(max_length=600),
         ),
         migrations.AlterField(
-            model_name='product',
-            name='name',
+            model_name="product",
+            name="name",
             field=models.CharField(max_length=600),
         ),
     ]

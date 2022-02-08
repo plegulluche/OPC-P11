@@ -6,18 +6,18 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('account', '0001_initial'),
+        ("account", "0001_initial"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='account',
-            name='email_is_active',
+            model_name="account",
+            name="email_is_active",
             field=models.BooleanField(default=False),
         ),
         migrations.AddField(
-            model_name='account',
-            name='token',
+            model_name="account",
+            name="token",
             field=models.TextField(blank=True, null=True),
         ),
     ]

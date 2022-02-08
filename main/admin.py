@@ -1,7 +1,5 @@
-from re import A
 from django.contrib import admin
-from django.contrib.auth.admin import UserAdmin
-from products.models import Nutrimage,Product,Category
+from products.models import Nutrimage, Product, Category
 from account.models import Account
 from favorites.models import FavouriteProduct
 
@@ -20,4 +18,3 @@ class UserAdmin(admin.ModelAdmin):
         "token",
         "email_is_active",
     )
-    

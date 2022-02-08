@@ -7,47 +7,73 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Category',
+            name="Category",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(default='to erase', max_length=400, unique=True)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "name",
+                    models.CharField(default="to erase", max_length=400, unique=True),
+                ),
             ],
             options={
-                'verbose_name': 'Category',
-                'verbose_name_plural': 'Categories',
+                "verbose_name": "Category",
+                "verbose_name_plural": "Categories",
             },
         ),
         migrations.CreateModel(
-            name='Nutrimage',
+            name="Nutrimage",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=1)),
-                ('link', models.CharField(max_length=400)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=1)),
+                ("link", models.CharField(max_length=400)),
             ],
             options={
-                'verbose_name': 'Nutriscore Image',
-                'verbose_name_plural': 'Nutriscores Images',
+                "verbose_name": "Nutriscore Image",
+                "verbose_name_plural": "Nutriscores Images",
             },
         ),
         migrations.CreateModel(
-            name='Product',
+            name="Product",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=400)),
-                ('nutriScore', models.CharField(max_length=1)),
-                ('linkToIMG', models.CharField(max_length=300)),
-                ('linkToURLOFF', models.CharField(max_length=300)),
-                ('linkToNutriForG', models.CharField(max_length=300)),
-                ('category', models.ManyToManyField(to='products.Category')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=400)),
+                ("nutriScore", models.CharField(max_length=1)),
+                ("linkToIMG", models.CharField(max_length=300)),
+                ("linkToURLOFF", models.CharField(max_length=300)),
+                ("linkToNutriForG", models.CharField(max_length=300)),
+                ("category", models.ManyToManyField(to="products.Category")),
             ],
             options={
-                'verbose_name': 'Product',
-                'verbose_name_plural': 'Products',
+                "verbose_name": "Product",
+                "verbose_name_plural": "Products",
             },
         ),
     ]

@@ -5,31 +5,34 @@ from uuid import uuid4
 from account.models import Account
 from purbeurre.manager import send_mail
 
+
 def activate_message_view(request):
-    return render(request, 'activate_account/activate_email.html')
+    return render(request, "activate_account/activate_email.html")
+
 
 def active_succes_view(request):
-    return render(request, 'activate_account/active_success.html')
+    return render(request, "activate_account/active_success.html")
 
-def activate_email_view(request,token):
+
+def activate_email_view(request, token):
     user = Account.objects.filter(token=token).first()
     if user:
         user.email_is_active = True
         user.save()
-        return redirect('success')
+        return redirect("success")
     else:
-        return redirect('login')
+        return redirect("login")
 
 
 def registration_view(request):
     message = ""
-    if request.method == 'POST':
-        
-        name = request.POST.get('username')
-        email = request.POST.get('email')
-        password = request.POST.get('password')
+    if request.method == "POST":
+
+        name = request.POST.get("username")
+        email = request.POST.get("email")
+        password = request.POST.get("password")
         rand_token = uuid4()
-        
+
         if name != "":
             if email != "":
                 if password != "":
@@ -43,61 +46,55 @@ def registration_view(request):
                     new_user.save()
                 else:
                     message = "Veuillez saisir tout les champs"
-                    return render(request, 'register.html', {"message":message})
+                    return render(request, "register.html", {"message": message})
             else:
                 message = "Veuillez saisir tout les champs"
-                return render(request, 'register.html', {"message":message})
+                return render(request, "register.html", {"message": message})
         else:
-                message = "Veuillez saisir tout les champs"
-                return render(request, 'register.html', {"message":message})
-            
-        
-        subject = 'activez votre compte'
+            message = "Veuillez saisir tout les champs"
+            return render(request, "register.html", {"message": message})
+
+        subject = "activez votre compte"
         content = render_to_string(
             "activate_account/active.html",
             {
                 "username": name,
-                "link": f'http://127.0.0.1:8000/activate-email/{rand_token}'
-                
+                "link": f"http://127.0.0.1:8000/activate-email/{rand_token}",
             },
         )
-        send_mail(email,subject,content)
-        return redirect('activate_your_mail')
-    return render(request,'register.html')
-    
+        send_mail(email, subject, content)
+        return redirect("activate_your_mail")
+    return render(request, "register.html")
+
+
 def logout_view(request):
     logout(request)
-    return redirect('mainpage')
+    return redirect("mainpage")
 
 
 def login_view(request):
-    
+
     message = ""
-    if request.method == 'POST':
-        email = request.POST.get('email')
-        password = request.POST.get('password')
+    if request.method == "POST":
+        email = request.POST.get("email")
+        password = request.POST.get("password")
         user = Account.objects.filter(email=email, is_active=True).first()
         if user:
             utilisateur_auth = authenticate(email=user.email, password=password)
             if utilisateur_auth:
                 if user.email_is_active:
                     login(request, utilisateur_auth)
-                    return redirect('mainpage')
+                    return redirect("mainpage")
                 else:
                     message = "merci d'activer votre compte"
             else:
                 message = "vos identifiants ne sont pas corrects"
         else:
             message = "aucun utilisateur ne correspond a vos informations saisies"
-    
-    return render(request, 'login.html', {"message":message})      
+
+    return render(request, "login.html", {"message": message})
+
 
 def account_view(request):
-    
-    return render(request,'account_page.html', {})
 
-
-
-
-
-
+    return render(request, "account_page.html", {})
