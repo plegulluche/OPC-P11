@@ -1,7 +1,8 @@
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
+import os
 
-KEY = "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"
+KEY = os.environ.get("SENDGRID_API_KEY")
 # using SendGrid's Python Library
 # https://github.com/sendgrid/sendgrid-python
 
